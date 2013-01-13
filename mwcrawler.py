@@ -29,6 +29,9 @@ import os
 import socket
 import datetime
 
+# Malwares Repository Dir
+REPOSITORY_DIR = '/opt/malware/unsorted/'
+
 # By default thug analyis is disabled
 isthug	= False
 
@@ -91,7 +94,7 @@ def decisor(url):
 				return
 
 	else:
-		dest = '/opt/malware/unsorted/'+filetype
+		dest = REPOSITORY_DIR+filetype
 		fpath = dest+'/'+str(md5)
 
 		if not os.path.exists(dest):
