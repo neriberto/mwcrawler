@@ -186,6 +186,23 @@ def sacour(soup):
 			for row in min:
 				decisor(row)
 
+def abusetracker(soup, trackerID):
+        if trackerID == 1:
+            print "- Fetching from Abusetracker Zeus"
+        if trackerID == 2:
+            print " - Fetching from Abusetracker SpyeEye"
+	mlc=[]
+        for row in soup('description'):
+		mlc.append(row)
+	del mlc[0]
+	mlc_sites=[]
+	for row in mlc:
+		site = re.sub('&amp;','&',str(row).split()[trackerID]).replace(',','')
+		mlc_sites.append(site)
+	print "-- Found %s urls" % len(mlc_sites)
+	for row in mlc_sites:
+		decisor(row)
+
 if __name__ == "__main__":
 	print "Malware Parser v0.4"
 
@@ -197,12 +214,14 @@ if __name__ == "__main__":
 
 	#source list
         try:
-	    minotaur(parse('http://minotauranalysis.com/malwarelist-urls.aspx'))
-	    malwaredl(parse('http://www.malwaredomainlist.com/hostslist/mdl.xml'))
-	    vxvault(parse('http://vxvault.siri-urz.net/URL_List.php'))
-	    malc0de(parse('http://malc0de.com/rss'))
-	    malwarebl(parse('http://www.malwareblacklist.com/mbl.xml'))
-	    sacour(parse('http://www.sacour.cn/showmal.asp?month=%d&year=%d' % (now.month, now.year)))
+            abusetracker(parse('https://zeustracker.abuse.ch/monitor.php?urlfeed=binaries'), 1)
+            abusetracker(parse('https://spyeyetracker.abuse.ch/monitor.php?rssfeed=binaryurls'), 2)
+            minotaur(parse('http://minotauranalysis.com/malwarelist-urls.aspx'))
+            malwaredl(parse('http://www.malwaredomainlist.com/hostslist/mdl.xml'))
+            vxvault(parse('http://vxvault.siri-urz.net/URL_List.php'))
+            malc0de(parse('http://malc0de.com/rss'))
+            malwarebl(parse('http://www.malwareblacklist.com/mbl.xml'))
+            sacour(parse('http://www.sacour.cn/showmal.asp?month=%d&year=%d' % (now.month, now.year)))
         except KeyboardInterrupt:
             print 'Quiting...'
             sys.exit()
