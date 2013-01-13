@@ -196,9 +196,15 @@ if __name__ == "__main__":
 		print "- Thug analysis not enabled (use -t to enable thug)"
 
 	#source list
-	minotaur(parse('http://minotauranalysis.com/malwarelist-urls.aspx'))
-	malwaredl(parse('http://www.malwaredomainlist.com/hostslist/mdl.xml'))
-	vxvault(parse('http://vxvault.siri-urz.net/URL_List.php'))
-	malc0de(parse('http://malc0de.com/rss'))
-	malwarebl(parse('http://www.malwareblacklist.com/mbl.xml'))
-	sacour(parse('http://www.sacour.cn/showmal.asp?month=%d&year=%d' % (now.month, now.year)))
+        try:
+	    minotaur(parse('http://minotauranalysis.com/malwarelist-urls.aspx'))
+	    malwaredl(parse('http://www.malwaredomainlist.com/hostslist/mdl.xml'))
+	    vxvault(parse('http://vxvault.siri-urz.net/URL_List.php'))
+	    malc0de(parse('http://malc0de.com/rss'))
+	    malwarebl(parse('http://www.malwareblacklist.com/mbl.xml'))
+	    sacour(parse('http://www.sacour.cn/showmal.asp?month=%d&year=%d' % (now.month, now.year)))
+        except KeyboardInterrupt:
+            print 'Quiting...'
+            sys.exit()
+        except SystemExit:
+            pass
